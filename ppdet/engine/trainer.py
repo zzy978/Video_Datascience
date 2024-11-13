@@ -84,7 +84,7 @@ class Trainer(object):
             self.log_ranks = [int(i) for i in log_ranks.split(',')]
         elif isinstance(log_ranks, int):
             self.log_ranks = [log_ranks]
-        train_results_path = os.path.abspath(os.path.join(self.cfg.save_dir, "train_results.json"))
+        train_results_path = os.path.abspath(os.path.join(self.cfg.save_dir, "train_result.json"))
         if self.uniform_output_enabled:
             if os.path.exists(train_results_path) and self.mode == 'train':
                 try:

@@ -405,7 +405,7 @@ def update_train_results(config,
         return
     assert last_num >= 1
     train_results_path = os.path.join(config["save_dir"],
-                                      "train_results.json")
+                                      "train_result.json")
     save_model_tag = ["pdparams", "pdopt", "pdstates"]
     save_inference_tag = [
         "inference_config", "pdmodel", "pdiparams", "pdiparams.info"
