@@ -26,7 +26,7 @@ from .logger import setup_logger
 logger = setup_logger(__name__)
 
 __all__ = [
-    'check_gpu', 'check_npu', 'check_xpu', 'check_mlu', 'check_version',
+    'check_gpu', 'check_npu', 'check_xpu', 'check_mlu', 'check_gcu', 'check_version',
     'check_config'
 ]
 
@@ -107,6 +107,24 @@ def check_gpu(use_gpu):
     except Exception as e:
         pass
 
+def check_gcu(use_gcu):
+    """
+    Log error and exit when set use_gcu=true in paddlepaddle
+    version without paddle-custom-gcu installed.
+    """
+    err = "Config use_gcu cannot be set as true while you are " \
+          "using paddlepaddle version without paddle-custom-gcu " \
+          "installed! \nPlease try: \n" \
+          "\t1. Install paddle-custom-gcu to run model on GCU \n" \
+          "\t2. Set use_gcu as false in config file to run " \
+          "model on other devices supported."
+
+    try:
+        if use_gcu and not 'gcu' in paddle.device.get_all_custom_device_type():
+            logger.error(err)
+            sys.exit(1)
+    except Exception as e:
+        pass
 
 def check_version(version='2.2'):
     """

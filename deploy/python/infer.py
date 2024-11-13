@@ -1033,6 +1033,14 @@ def load_predictor(model_dir,
         config.enable_custom_device('npu')
     elif device == 'MLU':
         config.enable_custom_device('mlu')
+    elif device == 'GCU':
+        import paddle_custom_device.gcu.passes as gcu_passes
+        config.enable_custom_device('gcu')
+        config.enable_new_ir(True)
+        config.enable_new_executor(True)
+        gcu_passes.setUp()
+        kPirGcuPasses = gcu_passes.inference_passes(use_pir=True, name="PaddleDetection")
+        config.enable_custom_passes(kPirGcuPasses, True)
     else:
         config.disable_gpu()
         config.set_cpu_math_library_num_threads(cpu_threads)
@@ -1255,8 +1263,8 @@ if __name__ == '__main__':
     FLAGS = parser.parse_args()
     print_arguments(FLAGS)
     FLAGS.device = FLAGS.device.upper()
-    assert FLAGS.device in ['CPU', 'GPU', 'XPU', 'NPU', 'MLU'
-                            ], "device should be CPU, GPU, XPU, MLU or NPU"
+    assert FLAGS.device in ['CPU', 'GPU', 'XPU', 'NPU', 'MLU', 'GCU'
+                            ], "device should be CPU, GPU, XPU, MLU, NPU or GCU"
     assert not FLAGS.use_gpu, "use_gpu has been deprecated, please use --device"
 
     assert not (

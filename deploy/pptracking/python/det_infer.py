@@ -439,6 +439,10 @@ def load_predictor(model_dir,
         if config.lite_engine_enabled():
             config.enable_lite_engine()
         config.enable_custom_device('npu')
+    elif device == 'GCU':
+        if config.lite_engine_enabled():
+            config.enable_lite_engine()
+        config.enable_custom_device('gcu')
     else:
         config.disable_gpu()
         config.set_cpu_math_library_num_threads(cpu_threads)
