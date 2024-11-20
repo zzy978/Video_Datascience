@@ -1266,6 +1266,10 @@ class Trainer(object):
         self.model.eval()
         model = copy.deepcopy(self.model)
 
+        # add `export_mode` attr for all layers
+        for layer in self.model.sublayers(include_self=True):
+            layer.export_mode = True
+
         model_name = os.path.splitext(os.path.split(self.cfg.filename)[-1])[0]
         if for_fd:
             save_dir = output_dir
