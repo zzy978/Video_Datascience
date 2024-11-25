@@ -197,8 +197,8 @@ class Pipeline(object):
 
 
 def get_model_dir(cfg):
-    """ 
-        Auto download inference model if the model_path is a url link. 
+    """
+        Auto download inference model if the model_path is a url link.
         Otherwise it will use the model_path directly.
     """
     for key in cfg.keys():
@@ -240,13 +240,13 @@ def get_model_dir(cfg):
 class PipePredictor(object):
     """
     Predictor in single camera
-    
-    The pipeline for image input: 
+
+    The pipeline for image input:
 
         1. Detection
         2. Detection -> Attribute
 
-    The pipeline for video input: 
+    The pipeline for video input:
 
         1. Tracking
         2. Tracking -> Attribute
@@ -257,7 +257,7 @@ class PipePredictor(object):
         args (argparse.Namespace): arguments in pipeline, which contains environment and runtime settings
         cfg (dict): config of models in pipeline
         is_video (bool): whether the input is video, default as False
-        multi_camera (bool): whether to use multi camera in pipeline, 
+        multi_camera (bool): whether to use multi camera in pipeline,
             default as False
     """
 
@@ -723,7 +723,7 @@ class PipePredictor(object):
             scale = ShortSizeScale(short_size)
 
         object_in_region_info = {
-        }  # store info for vehicle parking in region       
+        }  # store info for vehicle parking in region
         illegal_parking_dict = None
         cars_count = 0
         retrograde_traj_len = 0
@@ -1021,7 +1021,7 @@ class PipePredictor(object):
                         frame_mot_res, max_len=frame_len)
                     retrograde_traj_len = retrograde_traj_len + 1
 
-                #the number of collected frames is enough to predict 
+                #the number of collected frames is enough to predict
                 if retrograde_traj_len == frame_len:
                     retrograde_mot_res = copy.deepcopy(
                         self.pipeline_res.get('mot'))
@@ -1315,7 +1315,7 @@ if __name__ == '__main__':
     parser = argsparser()
     FLAGS = parser.parse_args()
     FLAGS.device = FLAGS.device.upper()
-    assert FLAGS.device in ['CPU', 'GPU', 'XPU', 'NPU'
-                            ], "device should be CPU, GPU, XPU or NPU"
+    assert FLAGS.device in ['CPU', 'GPU', 'XPU', 'NPU', 'GCU'
+                            ], "device should be CPU, GPU, XPU, NPU or GCU"
 
     main()

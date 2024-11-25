@@ -109,6 +109,8 @@ class VideoActionRecognizer(object):
             self.config.enable_xpu(10 * 1024 * 1024)
         elif device == "NPU" or device == "npu":
             self.config.enable_custom_device('npu')
+        elif device == "GCU" or device == "gcu":
+            self.config.enable_custom_device('gcu')
         else:
             self.config.disable_gpu()
         if self.enable_mkldnn:
@@ -168,7 +170,7 @@ class VideoActionRecognizer(object):
         Args:
             input (str) or (list): video file path or image data list
         Returns:
-            results (dict): 
+            results (dict):
         '''
 
         input_names = self.predictor.get_input_names()
